@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyTestLibrary</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="hello_world">Files in assets found:</string>
+    <string name="action_settings">Settings</string>
+</resources>
