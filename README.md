@@ -9,11 +9,13 @@ mvn deploy:deploy-file -DgroupId=com.mycompany -DartifactId=mytestlibrary -Dvers
 
 you need to add the credentials to the .m2/settings.xml file see:
 
-<server>
+    <server>
       <id>hosted-test1</id>
       <username>admin</username>
       <password>admin123</password>
-</server>
+    </server>
 
 The app downloads the library from there (latest version) compiles with it.
+
+By tyoing "gradle update", the release apk is uploaded to nexus.
 
