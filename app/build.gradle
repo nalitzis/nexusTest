@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion 23
@@ -11,10 +12,24 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    signingConfigs {
+        release {
+            storeFile file("/Users/Ado/android-keys/my-release-key.keystore")
+            storePassword "test_release"
+            keyAlias "test_release"
+            keyPassword "test_release"
+        }
+    }
+
     buildTypes {
+        debug {
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -29,4 +44,20 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.mycompany:mytestlibrary:0.5.355'
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "http://localhost:8081/nexus/content/repositories/hosted-test1") {
+                authentication(userName: "admin", password: "admin123")
+            }
+            snapshotRepository(url: "http://localhost:8081/nexus/content/repositories/hosted-test1") {
+                authentication(userName: "admin", password: "admin123")
+            }
+            pom.version = "1.0.0"
+            pom.artifactId = "testapk"
+            pom.groupId = "com.mycompany"
+        }
+    }
 }
