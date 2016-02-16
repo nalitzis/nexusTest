@@ -15,7 +15,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("/Users/Ado/android-keys/my-release-key.keystore")
+            //kyestore created just for this prj
+            ///home/bulfoni/Android/keystore/test-key.keystore
+            ///Users/Ado/android-keys/my-release-key.keystore
+            storeFile file("/home/bulfoni/Android/keystore/test-key.keystore")
             storePassword "test_release"
             keyAlias "test_release"
             keyPassword "test_release"
@@ -35,8 +38,14 @@ android {
 }
 
 repositories {
+    // nexus test-repo
     maven {
-        url "http://localhost:8081/nexus/content/repositories/hosted-test1"
+        url "http://localhost:8082/nexus/content/repositories/hosted-test1"
+    }
+
+    //artifactory test repo
+    maven {
+        url "http://localhost:8081/artifactory/testrepo_maven"
     }
 }
 
@@ -49,11 +58,11 @@ dependencies {
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: "http://localhost:8081/nexus/content/repositories/hosted-test1") {
-                authentication(userName: "admin", password: "admin123")
+            repository(url: "http://localhost:8082/nexus/content/repositories/hosted-test1") {
+                authentication(userName: "admin", password: "password")
             }
-            snapshotRepository(url: "http://localhost:8081/nexus/content/repositories/hosted-test1") {
-                authentication(userName: "admin", password: "admin123")
+            repository(url: "http://localhost:8081/artifactory/testrepo_maven") {
+                authentication(userName: "admin", password: "password")
             }
             pom.version = "1.0.0"
             pom.artifactId = "testapk"
